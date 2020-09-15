@@ -14,29 +14,11 @@ from baselines.acktr import kfac
 from baselines.ppo2.ppo2 import safemean
 from collections import deque
 
-###
-import sys
-sys.path.append("./AER/Code")
-from aer import AER
-import numpy as np
-###
-
-
 class Model(object):
 
     def __init__(self, policy, ob_space, ac_space, nenvs,total_timesteps, nprocs=32, nsteps=20,
                  ent_coef=0.01, vf_coef=0.5, vf_fisher_coef=1.0, lr=0.25, max_grad_norm=0.5,
-                 kfac_clip=0.001, lrschedule='linear', is_async=True,
-                 ###
-                    save_path=None
-                 ###
-                 ):
-
-        ###
-        self.transitions_storage = None
-        if save_path is not None:
-            self.transitions_storage = []
-        ###
+                 kfac_clip=0.001, lrschedule='linear', is_async=True):
 
         self.sess = sess = get_session()
         nbatch = nenvs * nsteps
@@ -83,13 +65,6 @@ class Model(object):
         self.lr = Scheduler(v=lr, nvalues=total_timesteps, schedule=lrschedule)
 
         def train(obs, states, rewards, masks, actions, values):
-            ###
-            if self.transitions_storage is not None:
-                self.transition_storage.extend([
-                {'o': obs[0], 'u': np.array([acts]), 'r': rew, 'o_2': next_obs[0], 'done': np.array([done])}
-                for (obs, acts, rew, next_obs, done) in self._storage
-            ])
-            ###
             advs = rewards - values
             for step in range(len(obs)):
                 cur_lr = self.lr.value()
@@ -125,17 +100,6 @@ def learn(network, env, seed, total_timesteps=int(40e6), gamma=0.99, log_interva
     if network == 'cnn':
         network_kwargs['one_dim_bias'] = True
 
-    ###
-    save_path = None
-    if 'save_buffer' in network_kwargs:
-        save_path = network_kwargs['save_buffer']
-        del network_kwargs['save_buffer']
-
-    Aer = None
-    if 'use_aer' in network_kwargs:
-        Aer = AER(get_session(), env, network_kwargs, full_rollouts=True)
-    ###
-
     policy = build_policy(env, network, **network_kwargs)
 
     nenvs = env.num_envs
@@ -163,23 +127,6 @@ def learn(network, env, seed, total_timesteps=int(40e6), gamma=0.99, log_interva
         enqueue_threads = model.q_runner.create_threads(model.sess, coord=coord, start=True)
     else:
         enqueue_threads = []
-
-    ###
-    if Aer is not None:
-        def exposed_policy(obs):
-            action, *info = model.step(obs, S=runner.states, M=runner.dones)
-            return action[0], info
-        Aer.init_policy(exposed_policy)
-
-        runner.aer_next_idx = 0
-        runner.aer_obs_buffer = np.zeros([50000,2])
-        def get_observations_batch(batch_size):
-            #return np.array([runner.obs for _ in range(Aer.batch_size)])
-            idxes = np.random.randint(0, 50000, batch_size)
-            return runner.aer_obs_buffer[idxes]
-        Aer.init_experience_access(get_observations_batch)
-        aer_mean_reward_record = []
-    ###
 
     for update in range(1, total_timesteps//nbatch+1):
         obs, states, rewards, masks, actions, values, epinfos = runner.run()
@@ -209,11 +156,6 @@ def learn(network, env, seed, total_timesteps=int(40e6), gamma=0.99, log_interva
             logger.record_tabular("eplenmean", safemean([epinfo['l'] for epinfo in epinfobuf]))
             logger.dump_tabular()
 
-            ###
-            if Aer is not None:
-                aer_mean_reward_record.append(rew)
-            ###
-
         if save_interval and (update % save_interval == 0 or update == 1) and logger.get_dir():
             savepath = osp.join(logger.get_dir(), 'checkpoint%.5i'%update)
             print('Saving to', savepath)
@@ -221,7 +163,4 @@ def learn(network, env, seed, total_timesteps=int(40e6), gamma=0.99, log_interva
     coord.request_stop()
     coord.join(enqueue_threads)
 
-    ###
-    if Aer is not None:
-        return model, aer_mean_reward_record
     return model

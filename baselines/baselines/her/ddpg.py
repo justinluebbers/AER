@@ -12,13 +12,6 @@ from baselines.her.replay_buffer import ReplayBuffer
 from baselines.common.mpi_adam import MpiAdam
 from baselines.common import tf_util
 
-###
-import sys
-sys.path.append("./AER/Code")
-import GANs
-import pickle
-###
-
 
 def dims_to_shapes(input_dims):
     return {key: tuple([val]) if val > 0 else tuple() for key, val in input_dims.items()}
@@ -112,20 +105,6 @@ class DDPG(object):
 
         global DEMO_BUFFER
         DEMO_BUFFER = ReplayBuffer(buffer_shapes, buffer_size, self.T, self.sample_transitions) #initialize the demo buffer; in the same way as the primary data buffer
-
-        ###
-        self.use_gan_transitions = False
-        if 'use_gan_transitions' in kwargs:
-            self.use_gan_transitions = True
-            self.gans = GANs.GAN(data_shapes={'o':10,'u':4,'g':3,'o_2':10,'r':1})
-            self.gans.load_generator_session(kwargs['use_gan_transitions'])
-            self.reward_function = kwargs['reward_function']
-
-        self.store_transitions = False
-        if "store_transitions" in kwargs:
-            self.path_for_transitions = kwargs['store_transitions']
-            self.transition_storage = {key: [] for key in ['o', 'u', 'g', 'r', 'o_2']}
-        ###
 
     def _random_action(self, n):
         return np.random.uniform(low=-self.max_u, high=self.max_u, size=(n, self.dimu))
@@ -306,18 +285,6 @@ class DDPG(object):
                     for v in values:
                         rolloutV.append(v.tolist())
                     transitions[k] = np.array(rolloutV)
-            ### OLD ###
-            # else:
-            #    
-            #     if self.use_gan_transitions:
-            #         transitions = self.gans.sample_from_generator(self.batch_size)
-            #         r = self.reward_function(
-            #             achieved_goal=transitions['ag_2'],
-            #             desired_goal=transitions['g'],
-            #             info=None)
-            #         transitions['r'] = r
-            #         transitions['info_is_success'] = np.array([np.array([k+1]) for k in r])
-            #     ###
 
             else:
                 transitions = self.buffer.sample(self.batch_size) #otherwise only sample from primary buffer
@@ -328,27 +295,8 @@ class DDPG(object):
             transitions['o_2'], transitions['g_2'] = self._preprocess_og(o_2, ag_2, g)
 
             transitions_batch = [transitions[key] for key in self.stage_shapes.keys()]
-            ### 
-            # transitions_batch shape: ('g','o','u','o_2','g_2','r')
-            if self.store_transitions:
-                for key in ['g','o','u','o_2','r']:
-                    self.transition_storage[key].extend(transitions[key])
-
-            # ###
+        
             return transitions_batch
-
-    ###
-    def save_transition_storage(self):
-        if self.store_transitions:
-            pickle.dump(self.transition_storage, open(self.path_for_transitions, 'wb'))
-    
-    def start_collecting_transitions(self):
-        self.store_transitions = True
-    
-    def stop_collecting_transitions(self):
-        self.store_transitions = False
-    
-    ###
 
     def stage_batch(self, batch=None):
         if batch is None:

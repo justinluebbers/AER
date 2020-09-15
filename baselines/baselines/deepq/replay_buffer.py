@@ -1,18 +1,12 @@
 import numpy as np
 import random
 
-###
-import pickle
-###
 
 from baselines.common.segment_tree import SumSegmentTree, MinSegmentTree
 
 
 class ReplayBuffer(object):
     def __init__(self, size):
-    ###
-    # , save_path):
-    ###
         """Create Replay buffer.
 
         Parameters
@@ -25,14 +19,6 @@ class ReplayBuffer(object):
         self._maxsize = size
         self._next_idx = 0
 
-        ###
-        # self.save_buffer = False
-        # if save_path is not None:
-        #     self.save_buffer = True
-        #     self.save_path = save_path
-        #     self.transition_storage = []
-        ###
-
     def __len__(self):
         return len(self._storage)
 
@@ -44,23 +30,6 @@ class ReplayBuffer(object):
         else:
             self._storage[self._next_idx] = data
         self._next_idx = (self._next_idx + 1) % self._maxsize
-        ###
-        # if self.save_buffer and self._next_idx == 0:
-        #     self.transition_storage.extend([
-        #         {'o': obs[0], 'u': np.array([acts]), 'r': rew, 'o_2': next_obs[0], 'done': np.array([done])}
-        #         for (obs, acts, rew, next_obs, done) in self._storage
-        #     ])
-        ###
-    
-    ###
-    # def save_transitions(self):
-    #     if self._next_idx != 0:
-    #         self.transition_storage.extend([
-    #             {'o': obs[0], 'u': np.array([acts]), 'r': rew, 'o_2': next_obs[0], 'done': np.array([done])}
-    #             for (obs, acts, rew, next_obs, done) in self._storage[0:self._next_idx]
-    #         ])
-    #     pickle.dump(self.transition_storage, open(self.save_path, 'wb'))
-    ###
 
     def _encode_sample(self, idxes):
         obses_t, actions, rewards, obses_tp1, dones = [], [], [], [], []
@@ -98,64 +67,6 @@ class ReplayBuffer(object):
         """
         idxes = [random.randint(0, len(self._storage) - 1) for _ in range(batch_size)]
         return self._encode_sample(idxes)
-
-    ###
-    # def _encode_sample_aer(self, idxes, aer_d, act, AER_sess, EM, EM_Z, TM, TM_Z):
-    #     obses_t, actions, rewards, obses_tp1, dones = [], [], [], [], []
-    #     for i in idxes:
-    #         data = self._storage[i]
-    #         obs_t, _, reward, _, _ = data
-    #         #obs_t: (1,2), action: int, done: float
-    #         d = np.random.randint(aer_d)
-    #         obs_tp1 = obs_t
-    #         for _ in range(d+1):
-    #             obs_t = obs_tp1
-    #             inp = list(obs_t[0])
-    #             action = act(np.array(obs_t[0])[None])[0]
-    #             inp.append(action)
-    #             done = AER_sess.run(TM, feed_dict={TM_Z:[inp]})[0]
-    #             done = round(done[0])*1.0
-    #             obs_tp1 = AER_sess.run(EM, feed_dict={EM_Z:[inp]})
-    #         #obs_tp1: (1,2), done:(1,)
-    #         obses_t.append(np.array(obs_t, copy=False))
-    #         actions.append(np.array(action, copy=False))
-    #         rewards.append(reward)
-    #         obses_tp1.append(np.array(obs_tp1, copy=False))
-    #         dones.append(done)
-    #     return np.array(obses_t), np.array(actions), np.array(rewards), np.array(obses_tp1), np.array(dones)
-
-    # def sample_aer(self, aer_batch_size, aer_d, act, AER_sess, EM, EM_Z, TM, TM_Z):
-    #     idxes = [random.randint(0, len(self._storage) - 1) for _ in range(aer_batch_size)]
-    #     return self._encode_sample_aer(idxes, aer_d, act, AER_sess, EM, EM_Z, TM, TM_Z)
-
-    # def _encode_sample_aer_gan(self, f_obs, aer_d, act, AER_sess, EM, EM_Z, TM, TM_Z, GM, GM_Z):
-    #     obses_t, actions, rewards, obses_tp1, dones = [], [], [], [], []
-    #     for o in f_obs:
-    #         #obs_t: (1,2), action: int, done: float
-    #         d = np.random.randint(aer_d)
-    #         o = [o]
-    #         obs_tp1 = o
-    #         for _ in range(d+1):
-    #             obs_t = obs_tp1
-    #             inp = list(obs_t[0])
-    #             action = act(np.array(obs_t[0])[None])[0]
-    #             inp.append(action)
-    #             done = AER_sess.run(TM, feed_dict={TM_Z:[inp]})[0]
-    #             done = round(done[0])*1.0
-    #             obs_tp1 = AER_sess.run(EM, feed_dict={EM_Z:[inp]})
-    #         #obs_tp1: (1,2), done:(1,)
-    #         obses_t.append(np.array(obs_t, copy=False))
-    #         actions.append(np.array(action, copy=False))
-    #         rewards.append([-1.0])
-    #         obses_tp1.append(np.array(obs_tp1, copy=False))
-    #         dones.append(done)
-    #     return np.array(obses_t), np.array(actions), np.array(rewards), np.array(obses_tp1), np.array(dones)
-
-    
-    # def sample_aer_gan(self, aer_batch_size, aer_d, act, AER_sess, EM, EM_Z, TM, TM_Z, GM, GM_Z):
-    #     f_obs = AER_sess.run(GM, feed_dict={GM_Z: np.random.uniform(-1., 1., size=[aer_batch_size, GM_Z.shape.dims[1].value])})
-    #     return self._encode_sample_aer_gan(f_obs, aer_d, act, AER_sess, EM, EM_Z, TM, TM_Z, GM, GM_Z)
-###
 
 class PrioritizedReplayBuffer(ReplayBuffer):
     def __init__(self, size, alpha):

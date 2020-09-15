@@ -364,9 +364,7 @@ def load_variables(load_path, variables=None, sess=None):
     variables = variables or tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES)
 
     loaded_params = joblib.load(os.path.expanduser(load_path))
-    ###
-#    loaded_params['deepq/eps:0'] = 0.0
-    ###
+    
     restores = []
     if isinstance(loaded_params, list):
         assert len(loaded_params) == len(variables), 'number of variables loaded mismatches len(variables)'
@@ -374,10 +372,6 @@ def load_variables(load_path, variables=None, sess=None):
             restores.append(v.assign(d))
     else:
         for v in variables:
-            ###
-            # if v.initial_value.name.startswith('AER'):
-            #     continue
-            ###
             restores.append(v.assign(loaded_params[v.name]))
 
     sess.run(restores)

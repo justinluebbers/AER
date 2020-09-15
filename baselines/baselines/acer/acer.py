@@ -17,12 +17,6 @@ from baselines.a2c.utils import get_by_index, check_shape, avg_norm, gradient_ad
 from baselines.acer.buffer import Buffer
 from baselines.acer.runner import Runner
 
-###
-import sys
-sys.path.append("./AER/Code")
-from aer import AER
-###
-
 
 # remove last step
 def strip(var, nenvs, nsteps, flat = False):
@@ -71,26 +65,11 @@ class Model(object):
         nact = ac_space.n
         nbatch = nenvs * nsteps
 
-        ###
-        # A = tf.placeholder(tf.int32, [None]) # actions
-        # D = tf.placeholder(tf.float32, [None]) # dones
-        # R = tf.placeholder(tf.float32, [None]) # rewards, not returns
-        # MU = tf.placeholder(tf.float32, [None, nact]) # mu's
-
-        A = tf.placeholder(tf.int32, [nbatch]) # actions
-        D = tf.placeholder(tf.float32, [nbatch]) # dones
-        R = tf.placeholder(tf.float32, [nbatch]) # rewards, not returns
-        MU = tf.placeholder(tf.float32, [nbatch, nact]) # mu's
-        ###
         LR = tf.placeholder(tf.float32, [])
         eps = 1e-6
 
         step_ob_placeholder = tf.placeholder(dtype=ob_space.dtype, shape=(nenvs,) + ob_space.shape)
-        ###
-        train_ob_placeholder = tf.placeholder(dtype=ob_space.dtype, shape=(nenvs*(nsteps+1),) + ob_space.shape)
-        # shape = (None,) + ob_space.shape
-        # train_ob_placeholder = tf.placeholder(dtype=ob_space.dtype, shape=shape)
-        ###
+
         with tf.variable_scope('acer_model', reuse=tf.AUTO_REUSE):
 
             step_model = policy(nbatch=nenvs, nsteps=1, observ_placeholder=step_ob_placeholder, sess=sess)
@@ -367,12 +346,6 @@ def learn(network, env, seed=None,
     if not isinstance(env, VecFrameStack):
         env = VecFrameStack(env, 1)
 
-    ###
-    Aer = None
-    if 'use_aer' in network_kwargs:
-        Aer = AER(get_session(), env, network_kwargs)
-    ###
-
     policy = build_policy(env, network, estimate_q=True, **network_kwargs)
     nenvs = env.num_envs
     ob_space = env.observation_space
@@ -397,49 +370,11 @@ def learn(network, env, seed=None,
     acer = Acer(runner, model, buffer, log_interval)
     acer.tstart = time.time()
 
-    ###
-    if Aer is not None:
-        def exposed_policy(obs):
-            action, *info = model._step(obs, S=runner.states, M=runner.dones)
-            return action[0], info
-        Aer.init_policy(exposed_policy)
-        def get_observations_batch(batch_size):
-            idxes = np.random.randint(0, buffer.num_in_buffer, batch_size)
-            obs = []
-            for i in idxes:
-                tmp = buffer.take(buffer.enc_obs, [i], [0])[0]
-                j = np.random.randint(0,tmp.shape[0])
-                o = tmp[j]
-                obs.append(o)
-            return obs
-        Aer.init_experience_access(get_observations_batch)
-        aer_mean_reward_record = []
-    ###
-
     for acer.steps in range(0, total_timesteps, nbatch): #nbatch samples, 1 on_policy call and multiple off-policy calls
         acer.call(on_policy=True)
         if replay_ratio > 0 and buffer.has_atleast(replay_start):
             n = np.random.poisson(replay_ratio)
             for _ in range(n):
                 acer.call(on_policy=False)  # no simulation steps in this
-            ### 
-            # Shapes:
-            # obs: (21,2) -> (2,2) - float
-            # actions: (20,) -> (1,) - int
-            # dones: (20,) -> (1,) - bool
-            # rewards: (20,) -> (1,) - float
-            # mus: (20, 3) -> (1,3) - float
-            # masks: (21,) -> (2,) - bool
-            ###
 
-            if Aer is not None and Aer.batch_size > 0:
-                obs, actions, rewards, obs2, dones, info = Aer.sample_transitions()
-                for i in range(Aer.batch_size):
-                    a,b,c,d,e,f,g,h = np.array([obs[i],obs2[i]]), np.array([actions[i]]), rewards[i], np.array([bool(dones[i])]), info[i,0], acer.model.initial_state, np.array([bool(dones[i])]), acer.steps
-                    acer.model.train(a,b,c,d,e,f,g,h)
-                if acer.steps % Aer.log_mean_reward_freq == 0:
-                    aer_mean_reward_record.append(acer.episode_stats.mean_reward())
-            ###
-    if Aer is not None:
-        return model, aer_mean_reward_record
     return model

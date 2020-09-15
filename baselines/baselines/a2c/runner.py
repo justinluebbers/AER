@@ -18,23 +18,12 @@ class Runner(AbstractEnvRunner):
         self.batch_action_shape = [x if x is not None else -1 for x in model.train_model.action.shape.as_list()]
         self.ob_dtype = model.train_model.X.dtype.as_numpy_dtype
 
-        ###
-        self.aer_obs_buffer = None
-        ###
-
     def run(self):
         # We initialize the lists that will contain the mb of experiences
         mb_obs, mb_rewards, mb_actions, mb_values, mb_dones = [],[],[],[],[]
         mb_states = self.states
         epinfos = []
         for n in range(self.nsteps):
-            ###
-            if self.aer_obs_buffer is not None:
-                self.aer_obs_buffer[self.aer_next_idx] = self.obs[0]
-                self.aer_next_idx += 1
-                if self.aer_next_idx % 50000 == 0:
-                    self.aer_next_idx = 0
-            ###
 
             # Given observations, take action and value (V(s))
             # We already have self.obs because Runner superclass run self.obs[:] = env.reset() on init

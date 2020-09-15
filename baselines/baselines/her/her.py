@@ -5,12 +5,6 @@ import numpy as np
 import json
 from mpi4py import MPI
 
-###
-import sys
-np.set_printoptions(threshold=sys.maxsize)
-import pickle
-###
-
 from baselines import logger
 from baselines.common import set_global_seeds, tf_util
 from baselines.common.mpi_moments import mpi_moments
@@ -39,57 +33,20 @@ def train(*, policy, rollout_worker, evaluator,
     best_success_rate = -1
 
     if policy.bc_loss == 1: policy.init_demo_buffer(demo_file) #initialize demo buffer if training with demonstrations
-
-    ### OLD ###
-    #policy.clear_buffer()
-    #policy.buffer = pickle.load(open("./AER/replaybuffer.p", "rb"))
-    #print(str(policy.buffer.buffers))
-    
-    #episodes = list()
-
-    # episodes = pickle.load(open("./AER/replaybuffer.p", "rb"))
-    # for ep in episodes:
-    #     policy.store_episode(ep)
-    ###
-
-    ###
-    store_from_epoch = -1
-    store_to_epoch = -1
-    if 'store_transitions' in kwargs:
-        store_from_epoch = kwargs['store_from_epoch']
-        store_to_epoch = kwargs['store_to_epoch']
-    ###
     
     # num_timesteps = n_epochs * n_cycles * rollout_length * number of rollout workers
     for epoch in range(n_epochs):
-        ###
-        if store_from_epoch == epoch:
-            policy.start_collecting_transitions()
-        ###
+    
 
         # train
         rollout_worker.clear_history()
         for _ in range(n_cycles):
             episode = rollout_worker.generate_rollouts()
             policy.store_episode(episode)
-            ### OLD ###
-            #episodes.append(episode)
-            
-            # f = open("./AER/episodes.txt", "a")
-            # f.write(str(episode))
-            # f.write("\n")
-            # f.write("\n")
-            # f.close()
-            ###
 
             for _ in range(n_batches):
                 policy.train()
             policy.update_target_net()
-
-        ###
-        if store_to_epoch == epoch:
-                policy.stop_collecting_transitions()
-        ###
 
         # test
         evaluator.clear_history()
@@ -126,25 +83,7 @@ def train(*, policy, rollout_worker, evaluator,
         MPI.COMM_WORLD.Bcast(root_uniform, root=0)
         if rank != 0:
             assert local_uniform[0] != root_uniform[0]
-
-    ### OLD ###
-    # f = open("./AER/replaybuffer.txt", "w")
-    # f.write("buffer.buffers: " + str(policy.buffer.buffers))
-    # f.write("\n")
-    # f.write("buffer.buffer_shapes: " + str(policy.buffer.buffer_shapes))
-    # f.write("\n")
-    # f.write("buffer.buffer.T: " + str(policy.buffer.T))
-    # f.write("\n")
-    # f.write("\n")
-    # f.close()
-
-    #pickle.dump(episodes, open("./AER/replaybuffer_50000.p", "wb"))
-    ###
-
-    ###
-    if 'store_transitions' in kwargs:
-        policy.save_transition_storage()
-    ###
+    
     return policy
 
 

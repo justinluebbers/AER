@@ -7,7 +7,6 @@ from collections import defaultdict
 ###
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
-#print(os.getcwd())
 sys.path.append(os.getcwd()+"/baselines")
 ###
 import tensorflow as tf
@@ -35,10 +34,6 @@ try:
     import roboschool
 except ImportError:
     roboschool = None
-
-###
-# import gym_alteredenvs
-###
 
 _game_envs = defaultdict(set)
 for env in gym.envs.registry.all():

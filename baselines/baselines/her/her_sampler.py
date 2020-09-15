@@ -20,9 +20,7 @@ def make_sample_her_transitions(replay_strategy, replay_k, reward_fun):
         """episode_batch is {key: array(buffer_size x T x dim_key)}
         """
         T = episode_batch['u'].shape[1]
-        ### Anzahl der episoden (a 50 timesteps) im episode_batch
         rollout_batch_size = episode_batch['u'].shape[0]
-        ### Anzahl der Transitions die zurückgegeben werden sollen
         batch_size = batch_size_in_transitions
 
         # Select which episodes and time steps to use.
@@ -54,9 +52,6 @@ def make_sample_her_transitions(replay_strategy, replay_k, reward_fun):
         reward_params = {k: transitions[k] for k in ['ag_2', 'g']}
         reward_params['info'] = info
         transitions['r'] = reward_fun(**reward_params)
-
-        ### the info_is_success field now contains the old success information
-        ### when the goals were not yet swapped out
 
         transitions = {k: transitions[k].reshape(batch_size, *transitions[k].shape[1:])
                        for k in transitions.keys()}
