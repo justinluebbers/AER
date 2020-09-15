@@ -5,6 +5,9 @@ from mpl_toolkits import mplot3d
 import pickle
 import numpy as np
 import glob
+from util import parse_arguments
+import sys
+import distutils
 
 from pathlib import Path
 
@@ -88,7 +91,7 @@ def plot_scores_by_rollout(env = 'MountainCar', num_timesteps = '300000', replay
 
     for fn in filenames:
         path = fn.split('/')
-        if not (path[2] == replay and path[0] == env and path[3] == num_timesteps and (path[4] == 'default' or path[4] == model)):
+        if not (path[2] == replay and path[0] == env and path[3] == num_timesteps and (path[4] == 'default' or path[4] in model)):
             continue
         if path[-3] == 'default':
             bs = int(path[-2][2:])
@@ -212,10 +215,10 @@ def plot_scores_by_rollout(env = 'MountainCar', num_timesteps = '300000', replay
             plt.show()
 
 # Use this to plot scores by rollout length and training ratio
-def plot_all_scores(env, save, plot):
+def plot_all_scores(env='MountainCar', save=False, plot=True, num_timesteps='300000'):
     plot_scores_by_rollout(
         env=env,
-        num_timesteps='300000',
+        num_timesteps=num_timesteps,
         replay='default_replay',
         model='non_perfect',
         plotbars=True,
@@ -225,7 +228,7 @@ def plot_all_scores(env, save, plot):
     for m in ['EM','TM','RM','EM_TM_RM']: #'EM_TM','EM_RM','TM_RM'
         plot_scores_by_rollout(
         env=env,
-        num_timesteps='300000',
+        num_timesteps=num_timesteps,
         replay='default_replay',
         model='perfect_{}'.format(m),
         plotbars=True,
@@ -237,6 +240,7 @@ def plot_all_scores(env, save, plot):
 def get_all_progress_plots(env = 'MountainCar', num_timesteps = '300000', replay = 'default_replay', save = False, plot = True, models = ['non_perfect', 'default', 'perfect_EM', 'perfect_RM', 'perfect_TM', 'perfect_EM_TM_RM']):
     filenames = get_all_score_filenames_in_folder(DIR)
     
+
     titles = ['Average_mean_rewards', 'Variance_of_mean_rewards', 'Standard_deviation_of_mean_rewards', 'Average_progress', 'Variance_of_progress', 'Standard_deviation_of_progress']
     model_lables = {'non_perfect':'non-perfect', 
                     'default': 'DQN', 
@@ -312,30 +316,14 @@ def get_all_progress_plots(env = 'MountainCar', num_timesteps = '300000', replay
         plt.show()
 
 
-
 # plot_all_scores('CartPole',save = True, plot = False)
 
 # get_all_progress_plots(env='MountainCar', save=True)
 
-
-
-
-
-
-
-
-
-# def get_plots(d, bs, steps):
-#     episodes = []
-#     rewards = []
-#     with open(DIR+'{}/bs{}/d{}/'.format(steps, bs, d)+'progress.csv') as csv_file:
-#         csv_reader = csv.reader(csv_file, delimiter=',')
-#         line_count = 0
-#         for row in csv_reader:
-#             if line_count == 0:
-#                 line_count += 1
-#             else:
-#                 episodes.append(int(row[1]))
-#                 rewards.append(float(row[2]))
-#                 line_count += 1
-#     return episodes, rewards
+if __name__ == '__main__':
+    args, kwargs = parse_arguments(sys.argv)
+    target = kwargs.pop('target')
+    if target == 'scores':
+        plot_all_scores(**kwargs)
+    elif target == 'curves':
+        get_all_progress_plots(**kwargs)

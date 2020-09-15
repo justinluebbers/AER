@@ -1,15 +1,28 @@
-from run import run_approximator
 import sys
 from util import parse_arguments
+import data_manager as dm
+import approximator
 
 import os
-m = os.getcwd()
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
+import tensorflow as tf
+tf.get_logger().setLevel('ERROR')
 
 ###
 # Conveniently train multiple configurations of Approximators
 ###
+def main(env):
+    train(
+        model_name='EM_'+env, data_filename=env+'_transitions_1000000.p', 
+        hwidths=[32,64,128,256,512,768], hdepths=[1,2,3,6], loss_function='nrmse_range', n_steps=50000, suc_ratio=0.0, dropout=0.1)
+    # train(
+    #     model_name='RM_'+env, data_filename=env+'_transitions_1000000.p', 
+    #     hwidths=[2,4,8], hdepths=[0,2,4,8], loss_function='nrmse_range', n_steps=15000, suc_ratio=0.0, dropout=0.0)
+    # train(
+    #     model_name='TM_'+env, data_filename=env+'_transitions_1000000.p', 
+    #     hwidths=[2,4,8], hdepths=[0,2,4,8], loss_function='termination_loss', n_steps=15000, suc_ratio=0.3, dropout=0.1)
 
-def main(model_name, data_filename, hwidths, hdepths, loss_function, n_steps=20000, suc_ratio=0.0, dropout=0.1,load_model=None):
+def train(model_name, data_filename, hwidths, hdepths, loss_function, n_steps=20000, suc_ratio=0.0, dropout=0.1,load_model=None):
     n_steps = int(n_steps)
     suc_ratio = float(suc_ratio)
     hwidths = [int(w) for w in hwidths]
@@ -42,8 +55,16 @@ def main(model_name, data_filename, hwidths, hdepths, loss_function, n_steps=200
 
     run_approximator(params, data_filename)
 
-if __name__ == '__main__':
-    args, kwargs = parse_arguments(sys.argv)
-    main(**kwargs)
+def run_approximator(test_params, data_filename, only_success=False,**kwargs):
+    DM = dm.DataManager('./AER/data/'+data_filename, dm.load_data, only_success=only_success,**test_params[0])
+    for params in test_params:
+        approx = approximator.Approximator(activation = tf.nn.leaky_relu, data_manager = DM, **params)
+        approx.train(sample_function = approx.data_manager.sample_transitions_from_dict, **params)
 
+if __name__ == '__main__':
+    if len(sys.argv) == 1:
+        main('MountainCar')
+    else:
+        args, kwargs = parse_arguments(sys.argv)
+        train(**kwargs)
 
