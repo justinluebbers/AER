@@ -1,0 +1,49 @@
+Logging to ./AER/logs/Acrobot/deepq/default_replay/300000/bs16/d1/0/
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 100      |
+| mean 100 episode reward | -438     |
+| steps                   | 4.34e+04 |
+--------------------------------------
+Saving model due to mean reward increase: None -> -436.5
+Saving model due to mean reward increase: -436.5 -> -433.1000061035156
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 200      |
+| mean 100 episode reward | -411     |
+| steps                   | 8.45e+04 |
+--------------------------------------
+Saving model due to mean reward increase: -433.1000061035156 -> -390.6000061035156
+Saving model due to mean reward increase: -390.6000061035156 -> -378.70001220703125
+Saving model due to mean reward increase: -378.70001220703125 -> -339.29998779296875
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 300      |
+| mean 100 episode reward | -351     |
+| steps                   | 1.2e+05  |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 400      |
+| mean 100 episode reward | -418     |
+| steps                   | 1.62e+05 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 500      |
+| mean 100 episode reward | -419     |
+| steps                   | 2.03e+05 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 600      |
+| mean 100 episode reward | -454     |
+| steps                   | 2.49e+05 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 700      |
+| mean 100 episode reward | -434     |
+| steps                   | 2.92e+05 |
+--------------------------------------
+Restored model with mean reward: -339.29998779296875

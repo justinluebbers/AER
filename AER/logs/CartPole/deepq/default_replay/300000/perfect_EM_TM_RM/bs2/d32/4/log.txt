@@ -1,0 +1,13 @@
+Logging to ./AER/logs/CartPole/deepq/default_replay/300000/perfect_EM_TM_RM/bs2/d32/4/
+--------------------------------------
+| % time spent exploring  | 92       |
+| episodes                | 100      |
+| mean 100 episode reward | 22.8     |
+| steps                   | 2.26e+03 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 84       |
+| episodes                | 200      |
+| mean 100 episode reward | 25.5     |
+| steps                   | 4.81e+03 |
+--------------------------------------

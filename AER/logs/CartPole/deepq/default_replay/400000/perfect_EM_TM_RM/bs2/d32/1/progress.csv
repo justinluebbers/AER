@@ -1,0 +1,5 @@
+% time spent exploring,episodes,mean 100 episode reward,steps
+94,100,21.8,2159
+89,200,23.0,4459
+81,300,29.0,7359
+75,400,27.0,10063

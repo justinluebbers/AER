@@ -1,0 +1,45 @@
+Logging to ./AER/logs/CartPole/deepq/default_replay/400000/perfect_RM/bs2/d32/4/
+--------------------------------------
+| % time spent exploring  | 95       |
+| episodes                | 100      |
+| mean 100 episode reward | 20.4     |
+| steps                   | 2.02e+03 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 89       |
+| episodes                | 200      |
+| mean 100 episode reward | 23.4     |
+| steps                   | 4.36e+03 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 82       |
+| episodes                | 300      |
+| mean 100 episode reward | 26.4     |
+| steps                   | 7e+03    |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 77       |
+| episodes                | 400      |
+| mean 100 episode reward | 23.7     |
+| steps                   | 9.37e+03 |
+--------------------------------------
+Saving model due to mean reward increase: None -> 23.0
+--------------------------------------
+| % time spent exploring  | 70       |
+| episodes                | 500      |
+| mean 100 episode reward | 28.5     |
+| steps                   | 1.22e+04 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 64       |
+| episodes                | 600      |
+| mean 100 episode reward | 23.7     |
+| steps                   | 1.46e+04 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 56       |
+| episodes                | 700      |
+| mean 100 episode reward | 30.7     |
+| steps                   | 1.77e+04 |
+--------------------------------------
+Saving model due to mean reward increase: 23.0 -> 27.399999618530273

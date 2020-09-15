@@ -1,0 +1,50 @@
+Logging to ./AER/logs/CartPole/deepq/default_replay/400000/perfect_RM/bs2/d32/3/
+--------------------------------------
+| % time spent exploring  | 93       |
+| episodes                | 100      |
+| mean 100 episode reward | 26.4     |
+| steps                   | 2.61e+03 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 87       |
+| episodes                | 200      |
+| mean 100 episode reward | 24.4     |
+| steps                   | 5.06e+03 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 81       |
+| episodes                | 300      |
+| mean 100 episode reward | 24.8     |
+| steps                   | 7.53e+03 |
+--------------------------------------
+Saving model due to mean reward increase: None -> 26.700000762939453
+--------------------------------------
+| % time spent exploring  | 75       |
+| episodes                | 400      |
+| mean 100 episode reward | 25.4     |
+| steps                   | 1.01e+04 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 70       |
+| episodes                | 500      |
+| mean 100 episode reward | 18.8     |
+| steps                   | 1.19e+04 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 63       |
+| episodes                | 600      |
+| mean 100 episode reward | 27.9     |
+| steps                   | 1.47e+04 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 57       |
+| episodes                | 700      |
+| mean 100 episode reward | 25.2     |
+| steps                   | 1.73e+04 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 52       |
+| episodes                | 800      |
+| mean 100 episode reward | 20.3     |
+| steps                   | 1.93e+04 |
+--------------------------------------

@@ -1,0 +1,1 @@
+Logging to ./AER/logs/MountainCar/deepq/default_replay/300000/bs2/d24/3/

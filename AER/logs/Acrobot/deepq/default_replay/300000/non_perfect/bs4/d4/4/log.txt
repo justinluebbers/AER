@@ -1,0 +1,47 @@
+Logging to ./AER/logs/Acrobot/deepq/default_replay/300000/bs4/d4/4/
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 100      |
+| mean 100 episode reward | -481     |
+| steps                   | 4.77e+04 |
+--------------------------------------
+Saving model due to mean reward increase: None -> -481.1000061035156
+Saving model due to mean reward increase: -481.1000061035156 -> -477.3999938964844
+Saving model due to mean reward increase: -477.3999938964844 -> -468.70001220703125
+Saving model due to mean reward increase: -468.70001220703125 -> -468.20001220703125
+Saving model due to mean reward increase: -468.20001220703125 -> -449.79998779296875
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 200      |
+| mean 100 episode reward | -449     |
+| steps                   | 9.26e+04 |
+--------------------------------------
+Saving model due to mean reward increase: -449.79998779296875 -> -432.6000061035156
+Saving model due to mean reward increase: -432.6000061035156 -> -422.79998779296875
+Saving model due to mean reward increase: -422.79998779296875 -> -422.6000061035156
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 300      |
+| mean 100 episode reward | -420     |
+| steps                   | 1.35e+05 |
+--------------------------------------
+Saving model due to mean reward increase: -422.6000061035156 -> -419.1000061035156
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 400      |
+| mean 100 episode reward | -450     |
+| steps                   | 1.8e+05  |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 500      |
+| mean 100 episode reward | -477     |
+| steps                   | 2.27e+05 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 600      |
+| mean 100 episode reward | -479     |
+| steps                   | 2.75e+05 |
+--------------------------------------
+Restored model with mean reward: -419.1000061035156

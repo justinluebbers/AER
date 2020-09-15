@@ -1,0 +1,151 @@
+Logging to ./AER/logs/MountainCar/deepq/default_replay/300000/perfect_EM_RM/bs6/d8/0/
+--------------------------------------
+| % time spent exploring  | 35       |
+| episodes                | 100      |
+| mean 100 episode reward | -200     |
+| steps                   | 1.98e+04 |
+--------------------------------------
+Saving model due to mean reward increase: None -> -200.0
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 200      |
+| mean 100 episode reward | -198     |
+| steps                   | 3.96e+04 |
+--------------------------------------
+Saving model due to mean reward increase: -200.0 -> -198.5
+Saving model due to mean reward increase: -198.5 -> -192.6999969482422
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 300      |
+| mean 100 episode reward | -193     |
+| steps                   | 5.89e+04 |
+--------------------------------------
+Saving model due to mean reward increase: -192.6999969482422 -> -184.39999389648438
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 400      |
+| mean 100 episode reward | -176     |
+| steps                   | 7.65e+04 |
+--------------------------------------
+Saving model due to mean reward increase: -184.39999389648438 -> -169.3000030517578
+Saving model due to mean reward increase: -169.3000030517578 -> -148.3000030517578
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 500      |
+| mean 100 episode reward | -148     |
+| steps                   | 9.13e+04 |
+--------------------------------------
+Saving model due to mean reward increase: -148.3000030517578 -> -122.19999694824219
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 600      |
+| mean 100 episode reward | -110     |
+| steps                   | 1.02e+05 |
+--------------------------------------
+Saving model due to mean reward increase: -122.19999694824219 -> -106.4000015258789
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 700      |
+| mean 100 episode reward | -110     |
+| steps                   | 1.13e+05 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 800      |
+| mean 100 episode reward | -112     |
+| steps                   | 1.25e+05 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 900      |
+| mean 100 episode reward | -108     |
+| steps                   | 1.35e+05 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 1e+03    |
+| mean 100 episode reward | -106     |
+| steps                   | 1.46e+05 |
+--------------------------------------
+Saving model due to mean reward increase: -106.4000015258789 -> -106.0999984741211
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 1.1e+03  |
+| mean 100 episode reward | -112     |
+| steps                   | 1.57e+05 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 1.2e+03  |
+| mean 100 episode reward | -124     |
+| steps                   | 1.7e+05  |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 1.3e+03  |
+| mean 100 episode reward | -110     |
+| steps                   | 1.81e+05 |
+--------------------------------------
+Saving model due to mean reward increase: -106.0999984741211 -> -105.4000015258789
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 1.4e+03  |
+| mean 100 episode reward | -106     |
+| steps                   | 1.91e+05 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 1.5e+03  |
+| mean 100 episode reward | -105     |
+| steps                   | 2.02e+05 |
+--------------------------------------
+Saving model due to mean reward increase: -105.4000015258789 -> -103.30000305175781
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 1.6e+03  |
+| mean 100 episode reward | -104     |
+| steps                   | 2.12e+05 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 1.7e+03  |
+| mean 100 episode reward | -106     |
+| steps                   | 2.23e+05 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 1.8e+03  |
+| mean 100 episode reward | -119     |
+| steps                   | 2.35e+05 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 1.9e+03  |
+| mean 100 episode reward | -116     |
+| steps                   | 2.46e+05 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 2e+03    |
+| mean 100 episode reward | -114     |
+| steps                   | 2.58e+05 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 2.1e+03  |
+| mean 100 episode reward | -108     |
+| steps                   | 2.68e+05 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 2.2e+03  |
+| mean 100 episode reward | -122     |
+| steps                   | 2.81e+05 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 2.3e+03  |
+| mean 100 episode reward | -108     |
+| steps                   | 2.91e+05 |
+--------------------------------------
+Restored model with mean reward: -103.30000305175781

@@ -1,0 +1,40 @@
+Logging to ./AER/logs/Acrobot/deepq/default_replay/300000/bs8/d4/1/
+--------------------------------------
+| % time spent exploring  | 4        |
+| episodes                | 100      |
+| mean 100 episode reward | -296     |
+| steps                   | 2.94e+04 |
+--------------------------------------
+Saving model due to mean reward increase: None -> -298.0
+Saving model due to mean reward increase: -298.0 -> -297.20001220703125
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 200      |
+| mean 100 episode reward | -443     |
+| steps                   | 7.37e+04 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 300      |
+| mean 100 episode reward | -432     |
+| steps                   | 1.17e+05 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 400      |
+| mean 100 episode reward | -461     |
+| steps                   | 1.63e+05 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 500      |
+| mean 100 episode reward | -467     |
+| steps                   | 2.1e+05  |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 600      |
+| mean 100 episode reward | -491     |
+| steps                   | 2.59e+05 |
+--------------------------------------
+Restored model with mean reward: -297.20001220703125

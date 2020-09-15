@@ -1,0 +1,45 @@
+Logging to ./AER/logs/Acrobot/deepq/default_replay/300000/bs2/d8/0/
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 100      |
+| mean 100 episode reward | -483     |
+| steps                   | 4.78e+04 |
+--------------------------------------
+Saving model due to mean reward increase: None -> -481.0
+Saving model due to mean reward increase: -481.0 -> -468.20001220703125
+Saving model due to mean reward increase: -468.20001220703125 -> -462.79998779296875
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 200      |
+| mean 100 episode reward | -462     |
+| steps                   | 9.41e+04 |
+--------------------------------------
+Saving model due to mean reward increase: -462.79998779296875 -> -462.3999938964844
+Saving model due to mean reward increase: -462.3999938964844 -> -462.29998779296875
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 300      |
+| mean 100 episode reward | -452     |
+| steps                   | 1.39e+05 |
+--------------------------------------
+Saving model due to mean reward increase: -462.29998779296875 -> -447.3999938964844
+Saving model due to mean reward increase: -447.3999938964844 -> -395.70001220703125
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 400      |
+| mean 100 episode reward | -422     |
+| steps                   | 1.81e+05 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 500      |
+| mean 100 episode reward | -488     |
+| steps                   | 2.3e+05  |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 600      |
+| mean 100 episode reward | -490     |
+| steps                   | 2.79e+05 |
+--------------------------------------
+Restored model with mean reward: -395.70001220703125

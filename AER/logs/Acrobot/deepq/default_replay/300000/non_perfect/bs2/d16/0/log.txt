@@ -1,0 +1,50 @@
+Logging to ./AER/logs/Acrobot/deepq/default_replay/300000/bs2/d16/0/
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 100      |
+| mean 100 episode reward | -420     |
+| steps                   | 4.16e+04 |
+--------------------------------------
+Saving model due to mean reward increase: None -> -420.3999938964844
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 200      |
+| mean 100 episode reward | -473     |
+| steps                   | 8.89e+04 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 300      |
+| mean 100 episode reward | -463     |
+| steps                   | 1.35e+05 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 400      |
+| mean 100 episode reward | -427     |
+| steps                   | 1.78e+05 |
+--------------------------------------
+Saving model due to mean reward increase: -420.3999938964844 -> -413.20001220703125
+Saving model due to mean reward increase: -413.20001220703125 -> -396.0
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 500      |
+| mean 100 episode reward | -407     |
+| steps                   | 2.19e+05 |
+--------------------------------------
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 600      |
+| mean 100 episode reward | -416     |
+| steps                   | 2.6e+05  |
+--------------------------------------
+Saving model due to mean reward increase: -396.0 -> -383.0
+Saving model due to mean reward increase: -383.0 -> -326.3999938964844
+--------------------------------------
+| % time spent exploring  | 2        |
+| episodes                | 700      |
+| mean 100 episode reward | -292     |
+| steps                   | 2.9e+05  |
+--------------------------------------
+Saving model due to mean reward increase: -326.3999938964844 -> -291.5
+Restored model with mean reward: -291.5
