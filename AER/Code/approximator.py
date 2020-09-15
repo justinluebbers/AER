@@ -13,7 +13,7 @@ import math
 
 class Approximator:
     def __init__(self, activation = tf.nn.leaky_relu, data_manager = None, hdepth = 10, hwidth = 10,
-                model_dir="./AER/models/", scores_dir="./AER/scores/model_training/",
+                model_dir="./AER/models/", scores_dir="./AER/model_training/",
                 **kwargs):
         self.hwidth = hwidth
         self.hdepth = hdepth
